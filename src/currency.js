@@ -26,7 +26,7 @@ module.exports = function(robot) {
     });
   };
 
-  robot.respond(/(supported )?currenc(y|ies)$/i, function(msg, done) {
+  robot.respond(/(supported )?currenc(y|ies)$/i, { suggestions: ["supported currencies"] }, function(msg, done) {
     robot.http('https://www.google.com/finance/converter').get()(function(err, res, body) {
       var $, currency_code, currency_label, i, label, len, message, opt, opts;
       if (res.statusCode !== 200) {
@@ -47,18 +47,7 @@ module.exports = function(robot) {
     });
   });
 
-  robot.respond(/(currency|exchange) rate (\S{3}) ?.*/i, function(msg, done) {
-    var currency = msg.match[2].toUpperCase();
-    var ref = ['USD', 'EUR', 'GBP'];
-    var results = [];
-    for (var i = 0; i < ref.length; i++) {
-      base = ref[i];
-      results.push(currency !== base ? getConvertedAmount(msg, 1, currency, base) : void 0);
-    }
-    msg.send(results, done);
-  });
-
-  robot.respond(/(currency|exchange) ([0-9]+\.?[0-9]*)\s?(\S{3})( (in)?(to)?)? (\S{3}) ?.*/i, function(msg, done) {
+  robot.respond(/(currency|exchange) ([0-9]+\.?[0-9]*)\s?(\S{3})( (in)?(to)?)? (\S{3}) ?.*/i, { suggestions: ["exchange <amount> <currency> to <another-currency>"] }, function(msg, done) {
     var value = msg.match[2];
     var fromCurrency = msg.match[3].toUpperCase();
     var toCurrency = msg.match[7].toUpperCase();

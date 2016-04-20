@@ -19,10 +19,10 @@
     "url": "https://github.com/mihai/hubot-currency/issues"
   },
   "dependencies": {
-    "coffee-script": "~1.6",
-    "cheerio": "~0.18.0"
+    "cheerio": "~0.18.0",
+    "nestorbot": "^0.36.1"
   },
-  "main": "index.coffee",
+  "main": "index.js",
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
